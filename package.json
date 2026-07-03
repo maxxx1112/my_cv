@@ -12,7 +12,8 @@
     "deploy": "chmod +x deploy-keepalive.sh && ./deploy-keepalive.sh",
     "monitor": "node start_with_monitor.js",
     "test-continuity": "node test_continuity.js",
-    "quick-start": "quick_start.bat"
+    "quick-start": "quick_start.bat",
+    "keepalive": "node keepalive.js"
   },
   "keywords": [],
   "author": "",
