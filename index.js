@@ -50,10 +50,6 @@ const htmlContent = `
   <p><strong>تفاصيل الطلب:</strong><br>
   <span style="white-space: pre-wrap;">${data.content}</span></p>
   
-  <p>تم إرفاق ملف السيرة الذاتية (PDF) مع هذه الرسالة للاطلاع.</p>
-  
-  <p>أشكركم على وقتكم واهتمامكم، وأتطلع لفرصة التواصل معكم قريباً.</p>
-  
   <p><strong>مع خالص التقدير والاحترام،،</strong><br>
   ${data.myName}<br>
   ${data.myEmail}</p>
