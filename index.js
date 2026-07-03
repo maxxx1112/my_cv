@@ -40,50 +40,25 @@ async function sendGmail(data) {
     } catch (fileError) {
         throw new Error(`لم يتم العثور على ملف السيرة الذاتية cv.pdf. خطأ: ${fileError.message}`);
     }
-// 2. تجهيز قالب HTML نظيف وآمن من فلاتر البريد المزعج والـ ATS
 const htmlContent = `
-<div dir="rtl" style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; line-height: 1.6; color: #1e293b;">
+<div dir="rtl" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #222222; line-height: 1.5;">
+  <p>السيد / مسؤول التوظيف المحترم،</p>
+  <p>تحية طيبة وبعد،،</p>
   
-  <!-- رأس الرسالة (الموضوع) -->
-  <p style="font-size: 15px; margin-bottom: 25px;">
-    <strong>الموضوع:</strong> ${data.subject}
-  </p>
-
-  <!-- التحية -->
-  <p style="font-size: 15px; margin-top: 0;">
-    السيد / مسؤول التوظيف المحترم،<br><br>
-    تحية طيبة وبعد،،
-  </p>
-
-  <!-- المقدمة -->
-  <p style="font-size: 15px;">
-    أتمنى أن تكونوا بخير. أود أن أعبر عن اهتمامي الشديد بالتقدم لوظيفة <strong>(${data.jobTitle})</strong> المعلن عنها، وأرفق لكم سيرتي الذاتية للتقييم.
-  </p>
-
-  <!-- تفاصيل الطلب -->
-  <div style="margin: 25px 0;">
-    <p style="font-size: 15px; font-weight: bold; color: #1e3a8a; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">تفاصيل الطلب:</p>
-    <div style="font-size: 15px; white-space: pre-wrap; color: #334155;">${data.content}</div>
-  </div>
-
-  <!-- تنبيه المرفقات -->
-  <p style="font-size: 14px; color: #1e3a8a; font-weight: bold; margin-top: 25px;">
-    * تم إرفاق ملف السيرة الذاتية (PDF) مع هذه الرسالة للاطلاع.
-  </p>
-
-  <!-- بيانات المرسل والتوقيع -->
-  <div style="margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-    <p style="font-size: 15px; margin: 0;"><strong>المرسل:</strong> ${data.myName}</p>
-    <p style="font-size: 14px; color: #64748b; margin: 5px 0 0 0;"><strong>البريد الإلكتروني:</strong> ${data.myEmail}</p>
-  </div>
-
-  <!-- الخاتمة -->
-  <div style="margin-top: 25px;">
-    <p style="font-size: 14px; color: #64748b; margin: 0;">أشكركم على وقتكم واهتمامكم، وأتطلع لفرصة التواصل معكم قريباً.</p>
-    <p style="font-size: 15px; font-weight: bold; margin-top: 6px;">مع خالص التقدير والاحترام،،</p>
-  </div>
-
-</div>`;
+  <p>أتمنى أن تكونوا بخير. أود أن أعبر عن اهتمامي الشديد بالتقدم لوظيفة <strong>(${data.jobTitle})</strong> المعلن عنها، وأرفق لكم سيرتي الذاتية للتقييم.</p>
+  
+  <p><strong>تفاصيل الطلب:</strong><br>
+  <span style="white-space: pre-wrap;">${data.content}</span></p>
+  
+  <p>تم إرفاق ملف السيرة الذاتية (PDF) مع هذه الرسالة للاطلاع.</p>
+  
+  <p>أشكركم على وقتكم واهتمامكم، وأتطلع لفرصة التواصل معكم قريباً.</p>
+  
+  <p><strong>مع خالص التقدير والاحترام،،</strong><br>
+  ${data.myName}<br>
+  ${data.myEmail}</p>
+</div>
+`;
     const base64Html = Buffer.from(htmlContent).toString('base64');
     const boundary = "tech_dev_boundary_" + new Date().getTime().toString(16);
     const utf8Subject = `=?utf-8?B?${Buffer.from(data.subject).toString('base64')}?=`;
