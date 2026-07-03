@@ -1,0 +1,38 @@
+{
+  "name": "111",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "NODE_ENV=development node index.js",
+    "prod": "NODE_ENV=production node index.js",
+    "test-keepalive": "chmod +x test-keepalive.sh && ./test-keepalive.sh",
+    "external-keepalive": "chmod +x external-keepalive.sh && ./external-keepalive.sh",
+    "deploy": "chmod +x deploy-keepalive.sh && ./deploy-keepalive.sh",
+    "monitor": "node start_with_monitor.js",
+    "test-continuity": "node test_continuity.js",
+    "quick-start": "quick_start.bat"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@azure/msal-node": "^5.2.2",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "axios": "^1.10.0",
+    "cheerio": "^1.1.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "googleapis": "^173.0.0",
+    "input": "^1.0.1",
+    "isomorphic-fetch": "^3.0.0",
+    "multer": "^2.0.2",
+    "node-mailjet": "^6.0.11",
+    "nodemailer": "^8.0.11",
+    "telegraf": "^4.16.3",
+    "telegram": "^2.26.22"
+  }
+}
