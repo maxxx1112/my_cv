@@ -219,4 +219,6 @@ app.use(express.json());
 app.get('/', (req, res) => res.send('Bot is active and using Gmail API!'));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Web server listening on port ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Web server listening on port ${PORT}`);
+});
