@@ -47,7 +47,7 @@ const htmlContent = `
   
   <p>أتمنى أن تكونوا بخير. أود أن أعبر عن اهتمامي الشديد بالتقدم لوظيفة <strong>(${data.jobTitle})</strong> المعلن عنها، وأرفق لكم سيرتي الذاتية للتقييم.</p>
   
-  <p><strong>تفاصيل الطلب:</strong><br>
+  <p><strong>نبذة مهنية:</strong><br>
   <span style="white-space: pre-wrap;">${data.content}</span></p>
   
   <p><strong>مع خالص التقدير والاحترام،،</strong><br>
