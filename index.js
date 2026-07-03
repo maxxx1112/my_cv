@@ -3,18 +3,17 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const { google } = require('googleapis'); 
-require('dotenv').config();
 
-// ==================== إعداداتك الأساسية ====================
-
+// ==================== إعداداتك الأساسية (مخفية للـ Render) ====================
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const MY_TELEGRAM_ID     = process.env.MY_TELEGRAM_ID;
 
-// ==================== متغيرات Gmail API ====================
+// ==================== متغيرات Gmail API (مخفية للـ Render) ====================
 const GMAIL_CLIENT_ID     = process.env.GMAIL_CLIENT_ID;
 const GMAIL_CLIENT_SECRET = process.env.GMAIL_CLIENT_SECRET;
 const GMAIL_REFRESH_TOKEN = process.env.GMAIL_REFRESH_TOKEN;
 const GMAIL_SENDER_EMAIL  = process.env.GMAIL_SENDER_EMAIL;
+
 // إعداد مصادقة جوجل OAuth2
 const OAuth2 = google.auth.OAuth2;
 const oauth2Client = new OAuth2(
@@ -145,7 +144,7 @@ const bot = new Telegraf(TELEGRAM_BOT_TOKEN);
 // قفل الحماية التلقائي
 bot.use((ctx, next) => {
     const userId = ctx.from?.id.toString();
-    if (userId !== MY_TELEGRAM_ID.toString()) {
+    if (userId !== MY_TELEGRAM_ID?.toString()) {
         return ctx.reply("عذراً، هذا البوت خاص ومقفل لأسباب أمنية. 🔒");
     }
     return next();
@@ -206,11 +205,7 @@ bot.on('text', async (ctx) => {
     }
 });
 
-bot.launch().then(() => {
-    console.log("🚀 البوت الموحد شغال وجاهز لإرسال المرفقات عبر Gmail API!");
-}).catch(err => console.error('⚠️ Bot launch error:', err));
-
-// ==================== Web Server ====================
+// ==================== Web Server (يجب تشغيله أولاً لمنع مشاكل البورت) ====================
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -220,5 +215,22 @@ app.get('/', (req, res) => res.send('Bot is active and using Gmail API!'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Web server listening on port ${PORT}`);
+    console.log(`✅ Web server listening on port ${PORT}`);
+});
+
+// ==================== تشغيل البوت ====================
+bot.launch().then(() => {
+    console.log("🚀 البوت الموحد شغال وجاهز!");
+}).catch(err => {
+    console.error('⚠️ Bot launch error:', err.message);
+});
+
+// ==================== الإغلاق الآمن (لحل مشكلة 409 في Render) ====================
+process.once('SIGINT', () => {
+    console.log("إيقاف البوت بسبب SIGINT...");
+    bot.stop('SIGINT');
+});
+process.once('SIGTERM', () => {
+    console.log("إيقاف البوت بسبب SIGTERM...");
+    bot.stop('SIGTERM');
 });
